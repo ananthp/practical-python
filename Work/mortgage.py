@@ -1,6 +1,6 @@
 # mortgage.py
 #
-# Exercise 1.10
+# Exercise 1.11
 
 principal = 500_000.0
 rate = 0.05
@@ -18,12 +18,17 @@ while principal > 0:
     # We increment months at the beginning so the logic looks natural.
     # Think that the month has arrived, then we proceed with payment. 
     months = months + 1
+    principal = principal * (1+rate/12)
+
     if months >= extra_payment_start_month and months <= extra_payment_end_month:
         payment = regular_payment + extra_payment
     else:
         payment = regular_payment
+    
+    if principal < payment:
+        payment = principal
 
-    principal = principal * (1+rate/12)- payment
+    principal = principal - payment
     total_paid = total_paid + payment
 
     print(months, round(total_paid, 2), round(principal,2))
